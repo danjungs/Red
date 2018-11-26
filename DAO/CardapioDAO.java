@@ -1,0 +1,119 @@
+package DAO;
+
+import java.sql.*;
+import Modelo.*;
+
+public class CardapioDAO {
+	
+	Statement stmt;
+	Connection con;
+
+	public void conexaoBD ()
+	{
+	try {
+	    Class.forName("com.mysql.jdbc.Driver");
+	    String url = "jdbc:mysql://localhost:3306/Red";
+	    con = DriverManager.getConnection(url, "root", "senha");
+
+	    stmt = con.createStatement();
+
+	  }  catch(java.lang.ClassNotFoundException e) {
+	    System.err.print("Erro na Classe: " + e.getMessage());
+	  } catch (SQLException e) {
+	    System.err.print("Erro no SQL: " + e.getMessage());
+	  }
+	}	
+
+	public boolean validaLogin (String login, String senha){
+		try {  	  
+	     	String query = "SELECT * FROM cardapio where login = '" + login + "'";
+	     	ResultSet rs = stmt.executeQuery(query);
+	     	if (rs.next()) {
+	     		if (rs.getString("senha").equals(senha))
+	     		   return true;
+	        } 
+	     	else{
+	        	return false;
+	        }
+	      }  catch (SQLException e) {
+	        System.err.print("Erro no SQL: " + e.getMessage());
+	      }
+	   return false;   
+	}
+	
+	public cardapio[] consultaTodos ()
+	{
+		int totalCardapio = 7; 
+		cardapio[] p1 = new cardapio[1];
+	    try {  	  
+	     	String query = "SELECT * FROM cardapio Order by codigoProd";
+	       	ResultSet rs = stmt.executeQuery("SELECT COUNT(codigoProd)FROM cardapio");
+	       	if (rs.next()) totalCardapio = rs.getInt(1);
+	     	rs = stmt.executeQuery(query);
+	     	cardapio[] c = new cardapio[totalCardapio];
+	       	int i = 0;
+	   	    while (rs.next()) {
+	   	    	c[i] = new cardapio();
+	   	    	c[i].setCodigoItem(rs.getInt("codigoProd"));
+	   	    	c[i].setItem(rs.getString("item"));
+	   	    	c[i].setPreco(rs.getFloat("preco"));
+	   	    	
+  	            i++;
+	        }
+	        return c;
+	      }  catch (SQLException e) {
+	        System.err.print("Erro no SQL: " + e.getMessage());
+	      }
+	   return p1;   
+	}
+	
+	public Pessoa consultaPorCodigo (int codigo){
+		Pessoa p = null;
+		try {  	  
+	     	String query = "SELECT * FROM cardapio where codigoFun = " + codigo;
+	     	ResultSet rs = stmt.executeQuery(query);
+	     	
+	     	if (rs.next()) {
+	     		p = new Pessoa();
+	     		p.setCodigo(rs.getInt("codigo"));
+	   	    	p.setLogin(rs.getString("login"));
+	   	    	p.setSenha(rs.getString("senha"));
+	   	    	p.setNome(rs.getString("nome"));	
+	        }
+	        return p;
+	      }  catch (SQLException e) {
+	        System.err.print("Erro no SQL: " + e.getMessage());
+	      }
+	   return p;   
+	}
+	
+	public void atualizar (Pessoa pessoa) {
+
+		// Cria um PreparedStatement
+		PreparedStatement pstm = null;
+		
+		conexaoBD ();
+		 try {
+		 // Monta a string sql
+		String sql = "update pessoa " +
+	                 "set nome = ?, login = ?, senha = ? " +
+	                 "where codigo = ?";
+
+		// Passa a string para o PreparedStatement
+		 pstm = con.prepareStatement(sql);
+
+		// Coloca os verdadeiros valores no lugar dos ?
+		 pstm.setString(1, pessoa.getNome());
+		 pstm.setString(2, pessoa.getLogin());
+		 pstm.setString(3, pessoa.getSenha());
+		 pstm.setInt(4, pessoa.getCodigo());
+		// Executa
+		 pstm.execute();
+		 } catch (SQLException e) {
+		// Retorna uma mensagem informando o erro
+		 System.out.println("N�o foi poss�vel salvar os dados!\nInforma��es sobre o erro:");	 
+		 e.printStackTrace();
+		 }
+	}
+
+}
