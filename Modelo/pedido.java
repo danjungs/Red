@@ -4,22 +4,33 @@ import java.sql.Date;
 
 public class pedido {
 	int codigoPedido;
-	String obsevacao;
+	int iditem;
+	String observacao;
 	int quantidade;
 	int mesa;
+	int codigoGarcom;
+	String status;
 	Date data;
 	int cpfCliente;
+	
+	
 	public int getCodigoPedido() {
 		return codigoPedido;
 	}
 	public void setCodigoPedido(int codigoPedido) {
 		this.codigoPedido = codigoPedido;
 	}
-	public String getObsevacao() {
-		return obsevacao;
+	public int getIditem() {
+		return iditem;
 	}
-	public void setObsevacao(String obsevacao) {
-		this.obsevacao = obsevacao;
+	public void setIditem(int iditem) {
+		this.iditem = iditem;
+	}
+	public String getObservacao() {
+		return observacao;
+	}
+	public void setObservacao(String observacao) {
+		this.observacao = observacao;
 	}
 	public int getQuantidade() {
 		return quantidade;
@@ -32,6 +43,18 @@ public class pedido {
 	}
 	public void setMesa(int mesa) {
 		this.mesa = mesa;
+	}
+	public int getCodigoGarcom() {
+		return codigoGarcom;
+	}
+	public void setCodigoGarcom(int codigoGarcom) {
+		this.codigoGarcom = codigoGarcom;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
 	}
 	public Date getData() {
 		return data;
