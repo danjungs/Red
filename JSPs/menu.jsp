@@ -68,7 +68,7 @@
 			<div class="navbar navbar-fixed-top navbar-inverse">
   				<div class="navbar-inner">    
     				<ul class="nav">
-      					<li><a href="login.jsp">Início</a></li>
+      					<li><a href="index.jsp">Início</a></li>
       					<li><a href="descricao.jsp">Descrição</a></li>
       					<li><a href="logout.jsp">Sair</a></li>
       				<!-- <li><a href="cadastro.jsp">Cadastro</a></li> -->	
@@ -90,17 +90,49 @@
 
 
 			<!-- Formulário de Perfil -->
-			<div class="container">
-			 	<form class="form-signin" >
-        			<h2 class="form-signin-heading">Opções</h2>
-  					<% 					
-  					String login_a = session.getValue("loginUsuario").toString();
-  					%>	
-					<li><a href="consultar_funcionario.jsp">Consultar Funcionarios</a></li>		
-					<li><a href="consultar_cardapio.jsp">Consultar Cardápio</a></li>	
-      			</form>      			
-    		</div>
-
+			<table ALIGN ="center" width ="900">
+				<tr>
+					<td>
+						<div>
+						 	<form class="form-signin">
+			        			<h2 class="form-signin-heading">Consultas</h2>
+			  					<% 					
+			  					String login_a = session.getValue("loginUsuario").toString();
+			  					%>	
+								<li><a href="consultar_funcionario.jsp">Consultar Funcionarios</a></li>		
+								<li><a href="consultar_cardapio.jsp">Consultar Cardápio</a></li>	
+			      			</form>        			  			
+			    		</div>
+			    	</td>
+			    	
+			    	<td>	
+						<div>
+						 	<form class="form-signin">
+			        			<h2 class="form-signin-heading">Pedidos</h2>
+			  					<% 					
+			  					String login_b = session.getValue("loginUsuario").toString();
+			  					%>	
+								<li><a href="gerar_pedido.jsp">Gerar Pedido</a></li>		
+								<li><a href="consultar_pedido.jsp">Consultar Pedido</a></li>	
+			      			</form>        			  			
+			    		</div>
+			    	</td>
+			    	
+			    	<td>	
+						<div>
+						 	<form class="form-signin">
+			        			<h2 class="form-signin-heading">Estoque</h2>
+			  					<% 					
+			  					String login_c = session.getValue("loginUsuario").toString();
+			  					%>	
+								<li><a href="consultar_estoque.jsp">Consultar Estoque</a></li>		
+								<li><a href="consultar_fornecedor.jsp">Consultar Fornecedor</a></li>	
+			      			</form>        			  			
+			    		</div>
+			    	</td>			    	
+			    </tr> 		
+			</table>
+			
 			<!-- 
 				Barra de navegação inferior desativada, substituída pelo rodapé fixo 
 				<div class="navbar navbar-fixed-bottom navbar-inverse">
